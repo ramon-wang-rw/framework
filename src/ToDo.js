@@ -4,6 +4,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import './TopBar.css';
 import Form from 'react-bootstrap/Form';
+import {PlusCircleFill, XCircleFill, PencilSquare} from 'react-bootstrap-icons';
 
 const LOCAL_STORAGE_KEY = 'todoApp.todos'
 
@@ -23,8 +24,12 @@ export default function Todo({ todo, toggleComplete, updateTodo, deleteTodo }) {
     const medRef = useRef()
     const highRef = useRef()
 
-    const handleShow = () => 
+    const handleShow = () => {
         setShow(true);
+        setNameInvalid(false);
+        setDescInvalid(false);
+    }
+        
     
   
 
@@ -119,17 +124,17 @@ export default function Todo({ todo, toggleComplete, updateTodo, deleteTodo }) {
             <td>
                 {visible && (
                 <>
-                <button onClick={handleShow}> update </button> 
+                <Button variant="primary" onClick={handleShow}><PencilSquare /> update </Button> 
                 <Modal size="sm" show={show} onHide={handleClose}>
                     <Modal.Header className='modal-header' closeButton>
-                        <Modal.Title>Add Task</Modal.Title>
+                        <Modal.Title><PencilSquare />Edit Task</Modal.Title>
                     </Modal.Header>
 
                     <Modal.Body>
                     <Form>
                         <Form.Group className="mb-3">
                             <Form.Control ref={todoNameRef} type="text" placeholder="Title" isInvalid= {nameInvalid} value = {todo.name} disabled/>
-                            <Form.Control.Feedback type="invalid"> Empty Field or Duplicate Title </Form.Control.Feedback>
+                            <Form.Control.Feedback type="invalid"> Empty Field </Form.Control.Feedback>
                         </Form.Group>
                         <br />
                         <Form.Group className="mb-3">
@@ -157,10 +162,10 @@ export default function Todo({ todo, toggleComplete, updateTodo, deleteTodo }) {
                     </Modal.Body>
                     <Modal.Footer>
                         <Button variant="primary" onClick={handleUpdate}>
-                        ADD
+                        <PencilSquare className="m-2"/>EDIT
                         </Button>
                         <Button variant="danger" onClick={handleClose}>
-                        CANCEL
+                        <XCircleFill className="m-2"/>CANCEL
                         </Button>
                     </Modal.Footer>
                 </Modal>        
@@ -168,7 +173,7 @@ export default function Todo({ todo, toggleComplete, updateTodo, deleteTodo }) {
 
                 <br/></>)}
                     
-                <button onClick={handleDelete}> delete </button>
+                <Button variant="danger" onClick={handleDelete}><XCircleFill /> delete </Button>
             </td>
         </tr>
     )
